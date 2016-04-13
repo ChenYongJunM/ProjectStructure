@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view autoresizesSubviews="NO" contentMode="scaleToFill" id="1" customClass="GOGOActivityIndicatorView">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6">
+                    <rect key="frame" x="142" y="4" width="36" height="36"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="36" id="3YI-lF-IkI"/>
+                        <constraint firstAttribute="height" constant="36" id="LaO-B7-Nqx"/>
+                    </constraints>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="icon_shuaxin_yinying.png" translatesAutoresizingMaskIntoConstraints="NO" id="7">
+                    <rect key="frame" x="130" y="40" width="60" height="10"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="10" id="64F-rI-0ua"/>
+                        <constraint firstAttribute="width" constant="60" id="lj9-4r-vkc"/>
+                    </constraints>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="centerX" secondItem="6" secondAttribute="centerX" id="22q-BB-ROM"/>
+                <constraint firstItem="6" firstAttribute="centerX" secondItem="7" secondAttribute="centerX" id="Ur7-fU-mL6"/>
+                <constraint firstItem="7" firstAttribute="top" secondItem="6" secondAttribute="bottom" id="Wml-ek-KIi"/>
+                <constraint firstAttribute="centerY" secondItem="6" secondAttribute="centerY" constant="3" id="xgU-Bh-4Zp"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="imageLogo_" destination="6" id="8"/>
+                <outlet property="imageYinying_" destination="7" id="9"/>
+            </connections>
+        </view>
+        <view autoresizesSubviews="NO" contentMode="scaleToFill" id="Vpx-pM-KuB" customClass="GOGOActivityIndicatorView">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EKV-0u-AQ1">
+                    <rect key="frame" x="142" y="7" width="36" height="36"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="36" id="5w7-9v-hTC"/>
+                        <constraint firstAttribute="width" constant="36" id="Es9-Zf-bMw"/>
+                    </constraints>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="centerX" secondItem="EKV-0u-AQ1" secondAttribute="centerX" id="hTJ-2X-sNk"/>
+                <constraint firstAttribute="centerY" secondItem="EKV-0u-AQ1" secondAttribute="centerY" id="q4S-Pu-zue"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="imageAnimationView_" destination="EKV-0u-AQ1" id="1el-6K-bsw"/>
+            </connections>
+        </view>
+    </objects>
+    <resources>
+        <image name="icon_shuaxin_yinying.png" width="60" height="10"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>
