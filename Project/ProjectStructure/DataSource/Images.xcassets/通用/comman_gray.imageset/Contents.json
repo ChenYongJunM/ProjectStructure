@@ -2,8 +2,8 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "一个像素-01.png"
+      "filename" : "一个像素-01.png",
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",

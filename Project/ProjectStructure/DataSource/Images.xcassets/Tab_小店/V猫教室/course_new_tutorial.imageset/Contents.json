@@ -6,13 +6,13 @@
     },
     {
       "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "The latest tutorial@2x.png"
+      "filename" : "The latest tutorial@2x.png",
+      "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "scale" : "3x",
-      "filename" : "The latest tutorial@3x.png"
+      "filename" : "The latest tutorial@3x.png",
+      "scale" : "3x"
     }
   ],
   "info" : {

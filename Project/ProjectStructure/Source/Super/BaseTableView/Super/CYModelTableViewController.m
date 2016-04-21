@@ -8,6 +8,7 @@
 
 #import "CYModelTableViewController.h"
 #import "UITableView+FDTemplateLayoutCell.h"
+#import "Masonry.h"
 
 @interface CYModelTableViewController ()
 {
@@ -84,15 +85,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    
+    //
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0, 64, self.view.bounds.size.width, self.view.bounds.size.height - 64) style:_style];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.backgroundColor = [UIColor colorWithRed:0.97 green:0.97 blue:0.97 alpha:1.0];
     self.tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    
     [self.view addSubview:self.tableView];
     
     [self loadCellModelMapping];
@@ -124,6 +123,9 @@
     NSString *modelClassString = NSStringFromClass(modelClass);
     self.modelCellClassMap[modelClassString] = NSStringFromClass(cellClass);
     self.modelReuseIdentifierMap[modelClassString] = reuseIdentifier;
+    
+    //FDTemplateLayoutCell(需要tableView知道初始化哪个类)    如果是storyBoard拖Cell则不需要
+    [self.tableView registerClass:cellClass forCellReuseIdentifier:reuseIdentifier];
 }
 
 - (Class)mappedCellClassForModelClass:(Class)modelClass
@@ -167,11 +169,21 @@
     }else{
         model = self.models[indexPath.row];
     }
+    NSString *cellIdentifier = [self mappedReuseIdentifierForModelClass:model.class];
 
-    Class cellClass = [self mappedCellClassForModelClass:model.class];
-    [cellClass heightWithModel:model];
-    return [cellClass heightWithModel:model];
-    
+//使用缓存高度
+    return [tableView
+            fd_heightForCellWithIdentifier:cellIdentifier
+            cacheByIndexPath:indexPath
+            configuration:^(UITableViewCell<CYModelBinding> *cell) {
+                cell.model = (BaseModel *)model;
+            }];
+
+    //未添加缓存高度
+//    Class cellClass = [self mappedCellClassForModelClass:model.class];
+//    return [cellClass heightWithModel:self.models[indexPath.row]];
+
+
 //    NSObject *model = self.models[indexPath.row];
 //    Class cellClass = [self mappedCellClassForModelClass:model.class];
 //    [cellClass heightWithModel:self.models[indexPath.row]];

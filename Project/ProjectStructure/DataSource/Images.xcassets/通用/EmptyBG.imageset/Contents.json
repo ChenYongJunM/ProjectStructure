@@ -2,8 +2,8 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "空白背景颜色.png"
+      "filename" : "空白背景颜色.png",
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",

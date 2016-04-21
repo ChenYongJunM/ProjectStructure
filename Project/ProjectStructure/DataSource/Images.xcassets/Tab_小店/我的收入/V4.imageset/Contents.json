@@ -6,13 +6,13 @@
     },
     {
       "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "等级v42x-13.png"
+      "filename" : "等级v42x-13.png",
+      "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "scale" : "3x",
-      "filename" : "等级v43x-13.png"
+      "filename" : "等级v43x-13.png",
+      "scale" : "3x"
     }
   ],
   "info" : {

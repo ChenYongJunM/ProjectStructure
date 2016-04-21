@@ -1,26 +1,49 @@
 //
-//  MainTableViewCell.m
-//  StructureProject
+//  TestTableViewCell.m
+//  FDTest
 //
-//  Created by ChenYJ on 15/7/19.
-//  Copyright (c) 2015年 ChenYJ. All rights reserved.
+//  Created by CYJ on 16/4/14.
+//  Copyright © 2016年 CYJ. All rights reserved.
 //
 
 #import "TestTableViewCell.h"
 #import "TestObj.h"
-
 @implementation TestTableViewCell
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self = [[NSBundle mainBundle] loadNibNamed:@"TestTableViewCell" owner:self options:nil][0];
+    }
+    return self;
+}
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    // Initialization code
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+
+    // Configure the view for the selected state
+}
+
+
+- (void)setModel:(BaseModel *)model
+{
+    TestObj *obj = (TestObj *)model;
+    _myLab.text = obj.name;
+    
+    UIView *la = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
+    la.backgroundColor = [UIColor redColor];
+    [self addSubview:la];
+}
 
 +(CGFloat)heightWithModel:(BaseModel *)model
 {
-    return 65;
-}
-
-- (void)setModel:(BaseModel *)model{
-    
-    TestObj *obj = (TestObj *)model;
-    
-    _myLab.text = obj.name;
+    return 600;
 }
 
 @end

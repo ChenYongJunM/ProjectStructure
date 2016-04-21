@@ -13,8 +13,20 @@
 #import "TestAobj.h"
 #import "TestATableViewCell.h"
 #import "MHUploadParam.h"
+#import "XQFeedModel.h"
+#import "FDFeedEntity.h"
+#import "FDFeedCell.h"
 
 @interface VCMessageViewController ()
+
+/**
+ *  解析json数据后得到的数据
+ */
+@property (strong, nonatomic) NSArray *feedsDataFormJSON;
+/**
+ *  用于给数据源使用的数组
+ */
+@property (strong, nonatomic) NSMutableArray *feeds;
 
 @end
 
@@ -47,12 +59,52 @@
     [self setNaviBarTitle:@"消息"];
     self.view.backgroundColor = [UIColor whiteColor];
     
+    [self loadJSONData:^{ // 加载完josn数据后要做的操作
+        
+        self.feeds = @[].mutableCopy;
+        
+        [self.feeds addObject:self.feedsDataFormJSON.mutableCopy];
+        
+        [self beginRefresh];
+        [self.tableView reloadData];
+        
+    }];
 }
+
+#pragma mark - 加载json数据
+- (void) loadJSONData:(void(^)()) then {
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        NSString *dataFilePath =[[NSBundle mainBundle] pathForResource:@"data" ofType:@"json"];
+        
+        NSData *data = [NSData dataWithContentsOfFile:dataFilePath];
+        
+        NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options: NSJSONReadingAllowFragments error:nil];
+        
+        NSArray *feedArray = dataDictionary[@"feed"];
+        
+        NSMutableArray *feedArrayM = @[].mutableCopy;
+        
+        [feedArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            
+            [feedArrayM addObject:[XQFeedModel feedWithDictionary:obj]];
+        }];
+        
+        self.feedsDataFormJSON = feedArrayM;
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            !then ? : then();
+        });
+    });
+}
+
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self beginRefresh];
+    
     
 //    [MHNetworkManager getRequstWithURL:@"http://dev.feiniubus.com:9031/api/common/Fence" params:nil successBlock:^(NSDictionary *returnData) {
 //        
@@ -61,25 +113,27 @@
 //    } showHUD:YES];
     
     
-    MHUploadParam *param =[[MHUploadParam alloc] init];
-    param.name = @"file";
-    param.fileName = @"image1.jpg";
-    param.data = UIImageJPEGRepresentation([self fixOrientation:[UIImage imageNamed:@"loading_1.png"]], 0.5);
-    param.mimeType = @"image/jpeg";
-    
-    [MHNetworkManager uploadFileWithURL:@"http://dev.feiniubus.com:9030/api/common/Resources" params:@{@"type":@1} successBlock:^(NSDictionary *returnData) {
-        
-    } failureBlock:^(NSError *error) {
-        
-    } uploadParam:param showHUD:YES];
+//    MHUploadParam *param =[[MHUploadParam alloc] init];
+//    param.name = @"file";
+//    param.fileName = @"image1.jpg";
+//    param.data = UIImageJPEGRepresentation([self fixOrientation:[UIImage imageNamed:@"loading_1.png"]], 0.5);
+//    param.mimeType = @"image/jpeg";
+//    
+//    [MHNetworkManager uploadFileWithURL:@"http://dev.feiniubus.com:9030/api/common/Resources" params:@{@"type":@1} successBlock:^(NSDictionary *returnData) {
+//        
+//    } failureBlock:^(NSError *error) {
+//        
+//    } uploadParam:param showHUD:YES];
 }
 
 #pragma mark - Override Supper.
 
 - (void)loadCellModelMapping
 {
-    [super registerModelClass:[TestObj class] mappedCellClass:[TestTableViewCell class] reuseIdentifier:@"TestTableViewCell"];
-    [super registerModelClass:[TestAobj class] mappedCellClass:[TestATableViewCell class] reuseIdentifier:@"TestATableViewCell"];
+//    [super registerModelClass:[TestObj class] mappedCellClass:[TestTableViewCell class] reuseIdentifier:@"TestTableViewCell"];
+//    [super registerModelClass:[TestAobj class] mappedCellClass:[TestATableViewCell class] reuseIdentifier:@"TestATableViewCell"];
+    
+    [super registerModelClass:[XQFeedModel class] mappedCellClass:[FDFeedCell class] reuseIdentifier:@"FDFeedCell"];
 }
 
 - (void)fetchDataWithOffset:(NSString *)offset
@@ -100,22 +154,20 @@
     //    });
     
     
-    TestObj *obj = [TestObj new];
-    TestAobj *objA = [TestAobj new];
     
     TestObj *obj1 = [TestObj new];
-    TestAobj *objA1 = [TestAobj new];
-    
     TestObj *obj2 = [TestObj new];
-    TestAobj *objA2 = [TestAobj new];
+    TestObj *obj3 = [TestObj new];
     
-    [self finishDataFetchWithModels:[@[@[obj,objA],@[obj1,objA1],@[obj2,objA2]] mutableCopy] hasMore:NO currentOffset:0 isSection:YES];
+    
+    [self finishDataFetchWithModels:self.feeds[0] hasMore:YES currentOffset:offset isSection:NO];
     
 }
 
 - (void)configureCell:(UITableViewCell<CYModelBinding> *)cell forIndexPath:(NSIndexPath *)indexPath
 {
     [super configureCell:cell forIndexPath:indexPath];
+
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -128,10 +180,10 @@
     //    [self GOpushViewController:[NextController new]];
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    return [NSString stringWithFormat:@"第%ld组",section];
-}
+//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+//{
+//    return [NSString stringWithFormat:@"第%ld组",section];
+//}
 
 
 

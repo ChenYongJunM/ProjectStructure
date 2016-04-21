@@ -56,7 +56,7 @@ upRefreshButton = _upRefreshButton;
         // 下拉刷新
         self.tableView.header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
             // 模拟延迟加载数据，因此2秒后才调用（真实开发中，可以移除这段gcd代码）
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 
                 self.offset = @"1";
                 self.currentOffSet = @"1";
@@ -69,7 +69,7 @@ upRefreshButton = _upRefreshButton;
         // 上拉刷新
         self.tableView.footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
             // 模拟延迟加载数据，因此2秒后才调用（真实开发中，可以移除这段gcd代码）
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 
                 self.currentRefreshType = CORefreshTypeUpPush;
                 self.currentOffSet = [NSString stringWithFormat:@"%ld",([self.currentOffSet integerValue] + 1)];

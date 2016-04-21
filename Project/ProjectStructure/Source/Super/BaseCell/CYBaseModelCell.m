@@ -47,6 +47,7 @@ isApearSeparatorView = _isApearSeparatorView;
 {
     // could subController implement ...
     
+    //会调用2次---  UITableViewCell 返回  and  计算UITableViewCell高度
 }
 
 + (CGFloat)heightWithModel:(BaseModel *)model
